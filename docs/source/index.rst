@@ -34,12 +34,6 @@ Please refer to our tutorials for details:
 .. _Differential analyses of whole interactome among varying conditions: differential_test_intestine.ipynb
 
 
-Contents
-==========
-.. toctree::
-   useage
-   API
-
 References
 ==========
 FineST manuscript with more details is available on bioRxiv_ now and is currently under review.
