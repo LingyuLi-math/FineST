@@ -2,9 +2,10 @@
 
 # -- Project information
 
-project = 'Lumache'
-copyright = '2021, Graziella'
-author = 'Graziella'
+project = "SpatialDM"
+author = "Zhuoxuan Li"
+title = "Fine-grained Spatial Transcriptomic"
+copyright = f"{datetime.now():%Y}, {author}"
 
 release = '0.1'
 version = '0.1.0'
