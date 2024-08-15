@@ -15,10 +15,6 @@ Uniquely, **FineST** can distinguish co-expressed ligand-receptor pairs (LR pair
    :align: center
 
 
-#FineST comprises two main steps: 
-# 1) global selection with ``spatialdm_global`` to identify significantly interacting LR pairs; \
-# 2) local selection with ``spatialdm_local`` to identify local spots for each interaction.
-
 Check out the :doc:`usage` section for further information, including
 how to :ref:`installation` the project.
 
@@ -38,21 +34,13 @@ Please refer to our tutorials for details:
 .. _Differential analyses of whole interactome among varying conditions: differential_test_intestine.ipynb
 
 
-#Contents
-#==========
-#
-#.. toctree::
-#
-#   usage
-#   API
-
-
-References
+Contents
 ==========
-FineST manuscript with more details is available on bioRxiv_ now and is currently under review.
 
-.. _bioRxiv: https://www.biorxiv.org/content/10.1101/2022.08.19.504616v1/
+.. toctree::
 
+   usage
+   API
 
 .. toctree::
    :caption: Main
@@ -72,3 +60,10 @@ FineST manuscript with more details is available on bioRxiv_ now and is currentl
 
    melanoma
    differential_test_intestine
+
+
+References
+==========
+FineST manuscript with more details is available on bioRxiv_ now and is currently under review.
+
+.. _bioRxiv: https://www.biorxiv.org/content/10.1101/2022.08.19.504616v1/
