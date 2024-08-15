@@ -11,7 +11,7 @@ and offers a *simple* and *intuitive* API.
 Uniquely, **FineST** can distinguish co-expressed ligand-receptor pairs (LR pairs) from spatially separating pairs at sub-spot level or single-cell level, and identify the super-resolved interaction.
 
 .. image:: https://github.com/LingyuLi-math/FineST/blob/main/docs/figuse/FineST_workflow.png?raw=true
-   :width: 300px
+   :width: 600px
    :align: center
 
 
