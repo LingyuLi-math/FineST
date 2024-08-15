@@ -1,4 +1,4 @@
-.. automodule:: FineST
+.. automodule:: spatialdm
 
 API
 ===
