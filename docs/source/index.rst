@@ -36,12 +36,6 @@ Please refer to our tutorials for details:
 
 Contents
 ==========
-
-.. toctree::
-
-   usage
-   API
-
 .. toctree::
    :caption: Main
    :maxdepth: 1
