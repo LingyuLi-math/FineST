@@ -37,6 +37,16 @@ Please refer to our tutorials for details:
 Contents
 ==========
 .. toctree::
+   useage
+   API
+
+References
+==========
+FineST manuscript with more details is available on bioRxiv_ now and is currently under review.
+
+.. _bioRxiv: https://www.biorxiv.org/content/10.1101/2022.08.19.504616v1/
+
+.. toctree::
    :caption: Main
    :maxdepth: 1
    :hidden:
@@ -54,10 +64,3 @@ Contents
 
    melanoma
    differential_test_intestine
-
-
-References
-==========
-FineST manuscript with more details is available on bioRxiv_ now and is currently under review.
-
-.. _bioRxiv: https://www.biorxiv.org/content/10.1101/2022.08.19.504616v1/
