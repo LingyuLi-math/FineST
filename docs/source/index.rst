@@ -14,7 +14,8 @@ Uniquely, **FineST** can distinguish co-expressed ligand-receptor pairs (LR pair
    :width: 900px
    :align: center
 
-**FineST** comprises two main steps: \
+
+FineST comprises two main steps: \
  1) global selection with ``spatialdm_global`` to identify significantly interacting LR pairs; \
  2) local selection with ``spatialdm_local`` to identify local spots for each interaction.
 
