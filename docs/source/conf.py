@@ -14,8 +14,8 @@ sys.path.insert(0, os.path.abspath("_ext"))
 
 # -- Project information
 
-project = "SpatialDM"
-author = "Zhuoxuan Li"
+project = "FineST"
+author = "Lingyu Li"
 title = "Fine-grained Spatial Transcriptomic"
 copyright = f"{datetime.now():%Y}, {author}"
 
@@ -28,7 +28,7 @@ extensions = [
     'sphinx.ext.duration',
     'sphinx.ext.doctest',
     'sphinx.ext.autodoc',
-    'sphinx.ext.autosummary',
+    #'sphinx.ext.autosummary',
     'sphinx.ext.intersphinx',
 ]
 
