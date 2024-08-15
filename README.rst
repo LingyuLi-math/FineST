@@ -18,7 +18,7 @@ It comprises two main steps: \
 2) Cell-cell communication pattern classification; \
 3) Pathway enrichment analysis.
 
-.. image:: https://github.com/LingyuLi-math/FineST/tree/main/docs/figuse/Downstream.png?raw=true
+.. image:: https://github.com/LingyuLi-math/FineST/blob/main/docs/figuse/Downstream.png?raw=true
    :width: 900px
    :align: center
 
