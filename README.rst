@@ -90,7 +90,7 @@ spatially co-expressed.
 Detailed Manual
 ===============
 
-The full manual is at https://FineST.readthedocs.io, including:  
+The full manual is at https://finest-rtd-tutorial.readthedocs.io, including:  
 
 * `Permutation-based SpatialDM (Recommended for small datasets, <10k spots)`_.
 
