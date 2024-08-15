@@ -1,5 +1,17 @@
 # Configuration file for the Sphinx documentation builder.
 
+
+import sys
+import os
+from datetime import datetime
+from pathlib import Path
+from sphinx.application import Sphinx
+from sphinx.ext import autosummary
+
+HERE = Path(__file__).parent
+sys.path.insert(0, f"{HERE.parent.parent}")
+sys.path.insert(0, os.path.abspath("_ext"))
+
 # -- Project information
 
 project = "SpatialDM"
