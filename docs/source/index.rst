@@ -13,7 +13,7 @@ Home
 
 
 About FineST
-===============
+============
 
 **FineST** (Fine-grained Spatial Transcriptomic) is a statistical model and toolbox to identify the super-resolved spatial co-expression (i.e., spatial association) between a pair of ligand and receptor.
 It pulls data from the `Open Food Facts database <https://world.openfoodfacts.org/>`_
