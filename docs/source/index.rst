@@ -7,7 +7,7 @@
 .. |Build Status| image:: https://travis-ci.org/leeyoyohku/SpatialDM.svg?branch=main
    :target: https://travis-ci.org/leeyoyohku/SpatialDM
 
-====
+
 Home
 ====
 
