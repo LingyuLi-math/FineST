@@ -7,8 +7,10 @@
 .. |Build Status| image:: https://travis-ci.org/leeyoyohku/SpatialDM.svg?branch=main
    :target: https://travis-ci.org/leeyoyohku/SpatialDM
 
+====
 Home
-===================================
+====
+
 
 About FineST
 ===============
@@ -19,10 +21,9 @@ and offers a *simple* and *intuitive* API.
 
 Uniquely, **FineST** can distinguish co-expressed ligand-receptor pairs (LR pairs) from spatially separating pairs at sub-spot level or single-cell level, and identify the super-resolved interaction.
 
-.. image:: https://github.com/LingyuLi-math/FineST/blob/main/docs/figuse/FineST_workflow.png?raw=true
+.. image:: https://github.com/LingyuLi-math/FineST/blob/main/docs/fig/FineST_workflow.png?raw=true
    :width: 600px
    :align: center
-
 
 Check out the :doc:`usage` section for further information, including
 how to :ref:`installation` the project.
@@ -30,7 +31,6 @@ how to :ref:`installation` the project.
 .. note::
 
    This project is under active development.
-
 
 Please refer to our tutorials for details:
 
@@ -43,11 +43,15 @@ Please refer to our tutorials for details:
 .. _Differential analyses of whole interactome among varying conditions: differential_test_intestine.ipynb
 
 
+
+
 References
 ==========
 FineST manuscript with more details is available on bioRxiv_ now and is currently under review.
 
 .. _bioRxiv: https://www.biorxiv.org/content/10.1101/2022.08.19.504616v1/
+
+
 
 .. toctree::
    :caption: Main

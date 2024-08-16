@@ -9,7 +9,7 @@ FineST (Fine_-grained S_ patial T_ ranscriptomics), a statistical model and tool
 
 Uniquely, FineST can distinguish co-expressed ligand-receptor pairs (LR pairs) from spatially separating pairs at sub-spot level or single-cell level, and identify the super-resolved interaction.
 
-.. image:: https://github.com/LingyuLi-math/FineST/blob/main/docs/figuse/FineST_framework.png?raw=true
+.. image:: https://github.com/LingyuLi-math/FineST/blob/main/docs/fig/FineST_framework.png?raw=true
    :width: 900px
    :align: center
 
@@ -18,13 +18,13 @@ It comprises two main steps: \
 2) Cell-cell communication pattern classification; \
 3) Pathway enrichment analysis.
 
-.. image:: https://github.com/LingyuLi-math/FineST/blob/main/docs/figuse/Downstream.png?raw=true
+.. image:: https://github.com/LingyuLi-math/FineST/blob/main/docs/fig/Downstream.png?raw=true
    :width: 900px
    :align: center
 
 With the analytical testing method, FineST accurately predicts ST gene expression and outperforms TESLA and iStar at both spot and gene levels in terms of the root mean square error (RMSE) and Pearson correlation coefficient (PCC) between the predicted gene expressions and ground truth.
 
-.. image:: https://github.com/LingyuLi-math/FineST/blob/main/docs/figuse/OtherMethods.png?raw=true
+.. image:: https://github.com/LingyuLi-math/FineST/blob/main/docs/fig/OtherMethods.png?raw=true
    :width: 900px
    :align: center
    
