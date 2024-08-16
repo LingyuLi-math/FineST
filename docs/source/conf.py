@@ -65,7 +65,7 @@ extensions = [
     "sphinx.ext.napoleon",
     "sphinx.ext.intersphinx",
     "sphinx.ext.githubpages",
-    "sphinx_autodoc_typehints",
+    # "sphinx_autodoc_typehints",
     "nbsphinx",
     # "edit_on_github",
 ]
