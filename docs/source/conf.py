@@ -66,7 +66,7 @@ extensions = [
     "sphinx.ext.intersphinx",
     "sphinx.ext.githubpages",
     # "sphinx_autodoc_typehints",
-    "nbsphinx",
+    # "nbsphinx",
     # "edit_on_github",
 ]
 
