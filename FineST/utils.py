@@ -5,12 +5,27 @@ import pandas as pd
 import numpy as np
 import random
 from scipy import stats
-import time
 from tqdm import tqdm
 from scipy.sparse import csc_matrix, csr_matrix, issparse, hstack
+import torch
 
 
-# pure statistics for bivariate Moran's R
+## set the device
+if torch.cuda.is_available():
+    dev = "cuda:0"
+else:
+    dev = "cpu"
+device = torch.device(dev)
+
+
+## define function
+def reshape_latent_image(inputdata):    ## [adata.shape[0]*256, 384]  -->  [adata.shape[0], 384]
+    inputdata_reshaped = inputdata.view(int(inputdata.shape[0]/16), 16, inputdata.shape[1])  # [adata.shape[0], 256, 384]
+    average_inputdata_reshaped = torch.sum(inputdata_reshaped, dim=1) / inputdata_reshaped.size(1)
+    return inputdata_reshaped, average_inputdata_reshaped
+
+
+## pure statistics for bivariate Moran's R
 def Moran_R_std(spatial_W, by_trace=False):
     """Calculate standard deviation of Moran's R under the null distribution.
     """
@@ -74,7 +89,7 @@ def Moran_R(X, Y, spatial_W, standardise=True, nproc=1):
     return R_val, R_z_score, R_p_val
 
 
-# global variance
+## global variance
 def globle_st_compute(adata):
     N = adata.shape[0]
 
@@ -167,13 +182,13 @@ def _standardise(X, Local=False, axis=None):
 def pair_selection_matrix(adata, n_perm, sel_ind, method):
     if adata.uns['mean'] == 'geometric':
         from scipy.stats.mstats import gmean
-    # local variables (only live in this function scope)
+    ## local variables (only live in this function scope)
     ligand = adata.uns['ligand'].loc[sel_ind]
     receptor = adata.uns['receptor'].loc[sel_ind]
     type_interaction = adata.uns['geneInter'].loc[sel_ind, 'annotation']
     n_short_lri = (type_interaction != 'Secreted Signaling').sum()
 
-    # averaged ligand values
+    ## averaged ligand values
     L1 = [pd.Series(x[0]).dropna().values for x in ligand.values]
     L_mat = [adata[:, L1[l]].X.astype(np.float64)[:, 0] for l in range(len(L1))]
     for i, k in enumerate(ligand.index):
@@ -183,7 +198,7 @@ def pair_selection_matrix(adata, n_perm, sel_ind, method):
             else:
                 L_mat[i] = adata[:, ligand.loc[k].dropna()].X.mean(1)
 
-    # averaged receptor values
+    ## averaged receptor values
     R1 = [pd.Series(x[0]).dropna().values for x in receptor.values]
     R_mat = [adata[:, R1[r]].X.astype(np.float64)[:, 0] for r in range(len(R1))]
     for i, k in enumerate(receptor.index):
@@ -238,8 +253,8 @@ def norm_max(X):
 
 
 def spot_selection_matrix(adata, ligand, receptor, ind, n_perm, method, scale_X=True):
-    # local variables (only live in this function scope)
-    # normalize raw counts
+    ## local variables (only live in this function scope)
+    ## normalize raw counts
     raw_norm = adata.raw.to_adata()
     raw_norm.X = csr_matrix([norm_max(X) for X in raw_norm.X.T]).T
     import scanpy as sc
@@ -256,7 +271,7 @@ def spot_selection_matrix(adata, ligand, receptor, ind, n_perm, method, scale_X=
             else:
                 L_mat0[i] = raw_norm[:, ligand.loc[k].dropna()].X.A.mean(1)
 
-    # averaged receptor values
+    ## averaged receptor values
     R1 = [pd.Series(x[0]).dropna().values for x in receptor.values]
     R_mat0 = [raw_norm[:, R1[r]].X.A.astype(np.float64)[:, 0] for r in range(len(R1))]
     for i, k in enumerate(receptor.index):
@@ -355,7 +370,7 @@ def compute_pathway(sample=None,
             overlap_size = len(overlap_features)
 
             negneg = total_feature_num + overlap_size - module_size - query_set_size
-            # Fisher's exact test
+            ## Fisher's exact test
             p_FET = stats.fisher_exact([[overlap_size, query_set_size - overlap_size],
                                         [module_size - overlap_size, negneg]], 'greater')[1]
             result.append((p_FET, modulename, module_size, overlap_size, overlap_features, n))

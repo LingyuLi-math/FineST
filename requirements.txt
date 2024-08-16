@@ -1,13 +1,33 @@
-# Just until rtd.org understands pyproject.toml
-spatialdm
-setuptools
-setuptools_scm
-typing_extensions
-importlib_metadata
-sphinx_rtd_theme>=0.3
-sphinx_autodoc_typehints
+# Single-cell sequencing analysis
+anndata==0.9.2
+scanpy==1.9.8
+SpatialDE
+SpatialDM==0.1.0
 
-# converting notebooks to html
-ipykernel
-sphinx>=1.7
-nbsphinx>=0.8.7
+# Data analysis
+numpy>=1.9.0
+scipy>=1.4.0
+statsmodels>=0.11
+pandas==2.0.3
+h5py==3.10.0
+
+# Plotting
+matplotlib>=3.1.2
+holoviews
+seaborn==0.13.2
+selenium
+
+# Machine learning
+numpy
+random
+json==2.0.9
+scikit-learn>=0.23
+hilearn
+
+# dependencies
+# torch==1.7.1+cu110
+
+# Others
+logging==0.5.1.2
+threadpoolctl
+tqdm
