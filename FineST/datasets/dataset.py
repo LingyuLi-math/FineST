@@ -19,7 +19,7 @@ _BRCA = AMetadata(
 _CRC_Original = AMetadata(
     name="CRC_Original",
     doc_header="Original colorectal cancer (CRC) dataset from Oliveira, et al. <https://www.biorxiv.org/content/10.1101/2024.06.04.597233v1.full>`__.",
-    shape=(137051, 18085),  
+    shape=(136954, 862), #(137051, 18085),  
     url="https://figshare.com/ndownloader/files/48724144", 
 )
 
@@ -79,4 +79,4 @@ for name, var in copy(locals()).items():
 
 
 __all__ = [  # noqa: F822
-    "NPC", "BRCA", "CRC_Original", "CRC_FineST","A2","A3","A4","A6","A7","A8","A9"]
+    "NPC", "BRCA", "CRC_Original", "CRC_FineST", "A3","A4","A6","A7","A8","A9"]
