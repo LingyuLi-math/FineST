@@ -32,7 +32,7 @@ class Metadata(ABC):
         if self.doc_header is None:
             object.__setattr__(self, "doc_header", f"Download `{self.name.title().replace('_', ' ')}` data.")
         if self.path is None:
-            object.__setattr__(self, "path", os.path.expanduser(f"~/.cache/spatialdm/{self.name}"))
+            object.__setattr__(self, "path", os.path.expanduser(f"~/.cache/FineST/{self.name}"))
 
     @property
     @abstractmethod
@@ -132,7 +132,7 @@ class AMetadata(Metadata):
 
 
 class ImgMetadata(Metadata):
-    """Metadata class for :class:`spatialdm.im.ImageContainer`."""
+    """Metadata class for :class:`FineST.im.ImageContainer`."""
 
     _DOC_FMT = """
     {doc_header}
@@ -144,11 +144,11 @@ class ImgMetadata(Metadata):
     path
         Path where to save the .tiff image.
     kwargs
-        Keyword arguments for :meth:`spatialdm.im.ImageContainer.add_img`.
+        Keyword arguments for :meth:`FineST.im.ImageContainer.add_img`.
 
     Returns
     -------
-    :class:`spatialdm.im.ImageContainer`
+    :class:`FineST.im.ImageContainer`
         The image data."""
     # not the perfect annotation, but better than nothing
     _EXT = ".tiff"
@@ -162,7 +162,7 @@ class ImgMetadata(Metadata):
         )
 
     def _download(self, fpath: PathLike, backup_url: str, **kwargs: Any) -> Any:
-        from spatialdm.im import ImageContainer  # type: ignore[attr-defined]
+        from FineST.im import ImageContainer  # type: ignore[attr-defined]
 
         check_presence_download(Path(fpath), backup_url)
 

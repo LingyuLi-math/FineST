@@ -1,6 +1,6 @@
 import scanpy as sc
-from cellContrast.model import *
-from cellContrast import utils
+# from cellContrast.model import *
+# from cellContrast import utils
 from argparse import ArgumentParser, SUPPRESS
 import os
 import json
