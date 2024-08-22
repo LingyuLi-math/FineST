@@ -19,14 +19,14 @@ _BRCA = AMetadata(
 _CRC_Original = AMetadata(
     name="CRC_Original",
     doc_header="Original colorectal cancer (CRC) dataset from Oliveira, et al. <https://www.biorxiv.org/content/10.1101/2024.06.04.597233v1.full>`__.",
-    shape=(136954, 33538),
+    shape=(137051, 18085),  
     url="https://figshare.com/ndownloader/files/48724144", 
 )
 
 _CRC_FineST = AMetadata(
     name="CRC_FineST",
     doc_header="FineST colorectal cancer (CRC) dataset  from Oliveira, et al. <https://www.biorxiv.org/content/10.1101/2024.06.04.597233v1.full>`__.",
-    shape=(136954, 33538),
+    shape=(136954, 862),
     url="https://figshare.com/ndownloader/files/48724447",
 )
 
