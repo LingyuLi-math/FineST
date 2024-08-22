@@ -3,8 +3,8 @@ import json
 import sys
 import os
 import scanpy as sc
-from cellContrast.model import *
-import cellContrast.loadData as loadData
+# from cellContrast.model import *
+# import cellContrast.loadData as loadData
 import torch
 import numpy as np
 from tqdm import tqdm

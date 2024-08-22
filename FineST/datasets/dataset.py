@@ -6,7 +6,7 @@ _NPC = AMetadata(
     name="NPC",
     doc_header="Nasopharyngeal carcinoma (NPC) dataset from `Gong et al <https://doi.org/10.1038/s41467-023-37614-6>`__.",
     shape=(1331, 36601),
-    url="https://figshare.com/ndownloader/files/48619396",
+    url="https://figshare.com/ndownloader/files/48619396", 
 )
 
 _BRCA = AMetadata(
@@ -16,18 +16,18 @@ _BRCA = AMetadata(
     url="https://ndownloader.figshare.com/files/40178041",
 )
 
-_CRC = AMetadata(
-    name="CRC",
-    doc_header="Adult colon rep 1 from Corbett, et al. <https://doi.org/10.1016/j.cell.2020.12.016>`__.",
-    shape=(2649, 33538),
-    url="https://ndownloader.figshare.com/files/40178029",
+_CRC_Original = AMetadata(
+    name="CRC_Original",
+    doc_header="Original colorectal cancer (CRC) dataset from Oliveira, et al. <https://www.biorxiv.org/content/10.1101/2024.06.04.597233v1.full>`__.",
+    shape=(136954, 33538),
+    url="https://figshare.com/ndownloader/files/48724144", 
 )
 
-_A2 = AMetadata(
-    name="A2",
-    doc_header="Adult colon rep 2 from Corbett, et al. <https://doi.org/10.1016/j.cell.2020.12.016>`__.",
-    shape=(2316, 33538),
-    url="https://figshare.com/ndownloader/files/40178317",
+_CRC_FineST = AMetadata(
+    name="CRC_FineST",
+    doc_header="FineST colorectal cancer (CRC) dataset  from Oliveira, et al. <https://www.biorxiv.org/content/10.1101/2024.06.04.597233v1.full>`__.",
+    shape=(136954, 33538),
+    url="https://figshare.com/ndownloader/files/48724447",
 )
 
 _A3 = AMetadata(
@@ -79,5 +79,4 @@ for name, var in copy(locals()).items():
 
 
 __all__ = [  # noqa: F822
-    "NPC", "BRCA",
-    "CRC","A2","A3","A4","A6","A7","A8","A9"]
+    "NPC", "BRCA", "CRC_Original", "CRC_FineST","A2","A3","A4","A6","A7","A8","A9"]
