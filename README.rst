@@ -51,6 +51,19 @@ development) version by the following command line:
 
 Installation time: < 1 min
 
+Alternatively, you can install from this GitHub repository for latest (often 
+development) version by the following command line:
+
+.. code-block:: bash
+
+   $ git clone https://github.com/LingyuLi-math/FineST.git
+   $ cd FineST
+   $ conda env create -f environment.yml
+   $ conda activate FineST
+   # fix bug of squidpy, locate the lib with `which python`
+   $ rsync ./src/_feature_mixin.py ~/.conda/envs/SpatialScope/lib/python3.9/site-packages/squidpy/im/_feature_mixin.py
+
+Installation time: < 1 min
 
 
 Quick example
