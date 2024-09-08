@@ -9,8 +9,15 @@ _NPC = AMetadata(
     url="https://figshare.com/ndownloader/files/48619396", 
 )
 
-_BRCA = AMetadata(
-    name="BRCA",
+_BRCA_FineST_allspot = AMetadata(
+    name="BRCA_FineST_allspot",
+    doc_header="Breast cancer (BRCA) dataset (all spots) from `Janesick et al <https://doi/10.1038/s41467-023-43458-x`__.",
+    shape=(19732 × 863),
+    url="https://figshare.com/ndownloader/files/49070155",
+)
+
+_BRCA_FineST_subspot = AMetadata(
+    name="BRCA_FineST_subspot",
     doc_header="Breast cancer (BRCA) dataset from `Janesick et al <https://doi/10.1038/s41467-023-43458-x`__.",
     shape=(4992, 18085),
     url="https://ndownloader.figshare.com/files/40178041",
