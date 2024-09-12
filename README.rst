@@ -51,26 +51,22 @@ development) version by the following command line:
 
 Installation time: < 1 min
 
-Alternatively, you can install from this GitHub repository for latest (often 
-development) version by the following command line:
+Alternatively, 
 
 .. code-block:: bash
 
    $ git clone https://github.com/LingyuLi-math/FineST.git
-   $ cd FineST
-   $ conda env create -f environment.yml
+   $ conda create --name FineST python=3.8
    $ conda activate FineST
-   # fix bug of squidpy, locate the lib with `which python`
-   $ rsync ./src/_feature_mixin.py ~/.conda/envs/SpatialScope/lib/python3.9/site-packages/squidpy/im/_feature_mixin.py
-
-Installation time: < 1 min
+   $ pip install -r requirements.txt
+Typically installation is expected to be completed within a few minutes. 
 
 
 Quick example
 =============
 
-Using the build-in melanoma dataset as an example, the following Python script
-will compute the p-value indicating whether a certain Ligand-Receptor is 
+Using the build-in NPC dataset as an example, the following Python script
+will predict super-resolution ST gene expression and compute the p-value indicating whether a certain Ligand-Receptor is 
 spatially co-expressed. 
 
 
@@ -109,9 +105,9 @@ The full manual is at https://finest-rtd-tutorial.readthedocs.io, including:
 
 * `Differential analyses of whole interactome among varying conditions`_.
 
-.. _Permutation-based SpatialDM (Recommended for small datasets, <10k spots): tutorial/melanoma.ipynb
+.. _Sub-spot level prediction: tutorial/AEContraNPC1_16_LRgene_clear_0618pvalue.ipynb
 
-.. _Differential analyses of whole interactome among varying conditions: tutorial/differential_test_intestine.ipynb
+.. _Sing-cell level prediction: tutorial/scAEContraNPC1_16_LRgene_clear_0604.ipynb
 
 
 
