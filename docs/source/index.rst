@@ -34,15 +34,13 @@ how to :ref:`installation` the project.
 
 Please refer to our tutorials for details:
 
-* `Permutation-based SpatialDM (Recommended for small datasets, <10k spots)`_.
+* `Sub-spot level prediction (Recommended for small datasets, <2k spots)`_.
 
-* `Differential analyses of whole interactome among varying conditions`_.
+* `Sing-cell level prediction (Recommended for small datasets, <2k spots)`_.
 
-.. _Permutation-based SpatialDM (Recommended for small datasets, <10k spots): melanoma.ipynb
+.. _Sub-spot level prediction: AEContraNPC1_16_LRgene_clear_0618pvalue.ipynb
 
-.. _Differential analyses of whole interactome among varying conditions: differential_test_intestine.ipynb
-
-
+.. _Sing-cell level prediction: scAEContraNPC1_16_LRgene_clear_0604.ipynb
 
 
 References
