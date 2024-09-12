@@ -36,11 +36,11 @@ Please refer to our tutorials for details:
 
 * `Sub-spot level prediction (Recommended for small datasets, <2k spots)`_.
 
-* `Sing-cell level prediction (Recommended for small datasets, <2k spots)`_.
+* `Sing-cell level prediction`_.
 
-.. _Sub-spot level prediction: AEContraNPC1_16_LRgene_clear_0618pvalue.ipynb
+.. _Sub-spot level prediction: tutorial/AEContraNPC1_16_LRgene_clear_0618pvalue.ipynb
 
-.. _Sing-cell level prediction: scAEContraNPC1_16_LRgene_clear_0604.ipynb
+.. _Sing-cell level prediction: tutorial/scAEContraNPC1_16_LRgene_clear_0604.ipynb
 
 
 References
