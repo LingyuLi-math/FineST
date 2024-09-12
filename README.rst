@@ -101,9 +101,9 @@ Detailed Manual
 
 The full manual is at https://finest-rtd-tutorial.readthedocs.io, including:  
 
-* `Permutation-based SpatialDM (Recommended for small datasets, <10k spots)`_.
+* `Sub-spot level prediction (Recommended for small datasets, <2k spots)`_.
 
-* `Differential analyses of whole interactome among varying conditions`_.
+* `Sing-cell level prediction (Recommended for small datasets, <2k spots)`_.
 
 .. _Sub-spot level prediction: tutorial/AEContraNPC1_16_LRgene_clear_0618pvalue.ipynb
 
