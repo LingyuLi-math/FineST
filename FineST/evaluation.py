@@ -188,3 +188,5 @@ def calculate_statistics_gene(matrix1, matrix2, label):
     
     print(f"Average cosine similarity--{label}: {average_cosine_similarity:.4f}")
     logger.info(f'Average cosine similarity--{label}: {average_cosine_similarity}')
+
+    
