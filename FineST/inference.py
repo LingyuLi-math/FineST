@@ -157,6 +157,46 @@ def perform_inference_image(model, test_loader):
 
 
 
+def perform_inference_image_between_spot(model, test_loader):
+    print("device",device)    
+
+    #####################################################################################
+    # for whole dataset
+    #####################################################################################        
+    print("***** Begin perform_inference: ******")
+    
+    input_image_all, input_coord_all = extract_test_data_image_between_spot(test_loader)   
+            
+    ## input image
+    image_profile = input_image_all.to(device)
+    ## reshape image
+    image_profile_reshape = image_profile.view(-1, image_profile.shape[2])     # [adata.shape[0], 256, 384] --> [adata.shape[0]*256, 384]
+    input_image_exp = image_profile_reshape.clone().detach().to(device)     # SDU
+    ## useful model
+    representation_image = model.image_encoder(input_image_exp) 
+    ## cross decoder
+    reconstructed_matrix_reshaped = model.matrix_decoder(representation_image)  
+    _, reconstruction_iamge_reshapef2 = reshape_latent_image(reconstructed_matrix_reshaped)
+    ## reshape
+    _, representation_image_reshape = reshape_latent_image(representation_image)
+    
+    #####################################################################################  
+    # convert
+    #####################################################################################  
+    ## matrix
+    representation_image_reshape = representation_image_reshape.cpu().detach().numpy() 
+    reconstruction_iamge_reshapef2 = reconstruction_iamge_reshapef2.cpu().detach().numpy() 
+    
+    return (reconstruction_iamge_reshapef2, 
+            reconstructed_matrix_reshaped,
+            representation_image_reshape,
+            input_image_exp,
+            input_coord_all)
+
+
+
+
+
 # def main():
     
     
