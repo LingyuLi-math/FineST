@@ -50,15 +50,61 @@ def extract_test_data(data_loader):
     return input_spot_test, input_image_test, input_coord_test, input_row_test, input_col_test
 
 
-
 #######################################################################
 ## 2024.9.16 LLY add some function for Load between spot data
 #######################################################################
+def extract_test_data_image_between_spot(data_loader):
+    reduced_image_list = []
+    reduced_coord_list = []
+
+    for batch in tqdm(data_loader):
+        reduced_image_list.append(batch['image'])
+        reduced_coord_list.append(batch['spatial_coords'])  
+
+    print("***** batch_size=adata.shape[0] *****")
+    input_image_test = torch.cat(reduced_image_list)
+    print(input_image_test.shape)
+
+    input_coord_test = reduced_coord_list
+    print(len(input_coord_test))
+    print("***** *****")
+    
+    print("Finished extractting image_between_spot data")    
+    return input_image_test, input_coord_test
+
+
+class DatasetCreatImageBetweenSpot(torch.utils.data.Dataset):
+    def __init__(self, image_paths, spatial_pos_path):
+        self.spatial_pos_csv = pd.read_csv(spatial_pos_path, sep=",", header=None)
+        
+        ## Load .pth file
+        self.images = []
+        for image_path in image_paths:
+            if image_path.endswith('.pth'):
+                image_tensor = torch.load(image_path)
+                self.images.extend(image_tensor)
+        self.image_data = torch.stack(self.images)
+        self.image_tensor = self.image_data.view(self.image_data.size(0), -1)  
+                
+        print("Finished loading all files")
+
+    def __getitem__(self, idx):
+        item = {}
+        v1 = self.spatial_pos_csv.loc[idx, 0]   
+        v2 = self.spatial_pos_csv.loc[idx, 1]  
+    
+        # Stack the tensors in the list along a new dimension  
+        item['image'] = self.image_tensor[idx * 16 : (idx + 1) * 16]    
+        item['spatial_coords'] = [v1, v2]  
+
+        return item
+
+    def __len__(self):
+        return len(self.spatial_pos_csv)
 
 
 
-
-
+    
 
 def loadBatchData(train_image_mat, train_matrix_mat, train_coors_mat, batch_size, pos_info):
     '''
