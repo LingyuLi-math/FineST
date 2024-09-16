@@ -2,9 +2,68 @@ import torch
 from torch import nn
 import torch.nn.functional as F
 from .utils import *
+# from cellContrast.model import *
+# from cellContrast import utils
+import os
+import json
+import numpy as np
+import  logging
+logging.getLogger().setLevel(logging.INFO)
+from .utils import *
+
+## set the device
+if torch.cuda.is_available():
+    dev = "cuda:0"
+else:
+    dev = "cpu"
+device = torch.device(dev)
+
 
 ## Set the random seed for PyTorch and NumPy
-torch.manual_seed(0)
+torch.manual_seed(666)
+
+
+#######################################################################
+## 2024.9.16 LLY add some function for Train and Test
+#######################################################################
+
+class DatasetCreat(torch.utils.data.Dataset):
+    def __init__(self, image_paths, spatial_pos_path, reduced_mtx_path):
+        self.spatial_pos_csv = pd.read_csv(spatial_pos_path, sep=",", header=None)
+        # 加载表达矩阵（转置为 cell x features）
+        self.reduced_matrix = np.load(reduced_mtx_path).T    # 若有行名和列名，使用 allow_pickle=True
+        
+        # 加载 .pth 文件
+        self.images = []
+        for image_path in image_paths:
+            if image_path.endswith('.pth'):
+                image_tensor = torch.load(image_path)
+                self.images.extend(image_tensor)
+        self.image_data = torch.stack(self.images)
+        self.image_tensor = self.image_data.view(self.image_data.size(0), -1)  
+                
+        print("Finished loading all files")
+
+    def __getitem__(self, idx):
+        item = {}
+        v1 = self.spatial_pos_csv.loc[idx, 0]   
+        v2 = self.spatial_pos_csv.loc[idx, 1]  
+        v3 = self.spatial_pos_csv.loc[idx, 2]   
+        v4 = self.spatial_pos_csv.loc[idx, 3]  
+    
+        # Stack the tensors in the list along a new dimension  
+        item['image'] = self.image_tensor[idx * 16 : (idx + 1) * 16]    
+        item['reduced_expression'] = torch.tensor(self.reduced_matrix[idx, :]).float()  # 提取对应的表达矩阵数据
+        item['spatial_coords'] = [v1, v2]  
+        item['array_row'] = v3   
+        item['array_col'] = v4  
+    
+        return item
+
+    def __len__(self):
+        return len(self.reduced_matrix)
+    
+
 
 
 ## 2023.10.26 need add CAE loss  
@@ -33,6 +92,68 @@ torch.manual_seed(0)
 #         return loss
 
 
+###############################
+# CoSimLoss Loss： used
+###############################
+def CoSimLoss(Y_hat: torch.Tensor, Y: torch.Tensor) -> torch.Tensor:
+    # Initialize cosine similarity objects for column-wise and row-wise calculations
+    cos_by_col = nn.CosineSimilarity(dim=1)
+    cos_by_row = nn.CosineSimilarity(dim=0)
+
+    # Compute column-wise cosine similarity loss between Y_hat and Y
+    loss1 = (1 - cos_by_col(Y_hat, Y)).mean()
+
+    # Compute row-wise cosine similarity loss between Y_hat and Y
+    loss2 = (1 - cos_by_row(Y_hat, Y)).mean()
+
+    # Combine the two losses to get the final loss (imp_loss)
+    imp_loss = loss1 + loss2
+
+    return imp_loss
+
+
+###############################
+# PearsonCorrelationLoss： v1
+###############################
+# def PearsonCorrelationLoss(x: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
+#     def compute_pearson_corr(x, y, dim):
+#         x_mean = torch.mean(x, dim=dim, keepdim=True)
+#         y_mean = torch.mean(y, dim=dim, keepdim=True)
+#         x_std = torch.std(x, dim=dim, keepdim=True)
+#         y_std = torch.std(y, dim=dim, keepdim=True)
+#         cov = torch.mean((x - x_mean) * (y - y_mean), dim=dim, keepdim=True)
+#         pearson_corr = cov / (x_std * y_std)
+#         loss = (1 - pearson_corr) / 2
+#         return torch.mean(loss)
+
+#     row_loss = compute_pearson_corr(x, y, dim=1)
+#     col_loss = compute_pearson_corr(x, y, dim=0)
+    
+#     combined_loss = row_loss + col_loss
+#     return combined_loss
+
+
+###############################
+# PearsonCorrelationLoss： v2
+###############################
+# def PearsonCorrelationLoss(x: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
+#     def compute_pearson_corr(x, y):
+#         x_mean = torch.mean(x, dim=0, keepdim=True)
+#         y_mean = torch.mean(y, dim=0, keepdim=True)
+#         x_std = torch.std(x, dim=0, keepdim=True)
+#         y_std = torch.std(y, dim=0, keepdim=True)
+#         cov = torch.mean((x - x_mean) * (y - y_mean), dim=0, keepdim=True)
+#         pearson_corr = cov / (x_std * y_std)
+#         loss = (1 - pearson_corr) / 2
+#         return torch.mean(loss)
+        
+#     col_loss = compute_pearson_corr(x, y)
+#     return col_loss
+
+
+###############################
+# ContrastiveLoss Loss： used
+###############################
 class ContrastiveLoss(nn.Module):
     def __init__(self, temperature=0.1):
         super(ContrastiveLoss, self).__init__()
@@ -96,20 +217,6 @@ class ContrastiveLoss(nn.Module):
         return loss
     
 
-# class ProjectionHead(nn.Module):
-#     def __init__(self, input_size, hidden_size, output_size):
-#         super(ProjectionHead, self).__init__()
-#         self.fc1 = nn.Linear(input_size, hidden_size)
-#         self.relu = nn.ReLU(inplace=True)
-#         self.fc2 = nn.Linear(hidden_size, output_size)
-
-#     def forward(self, x):
-#         x = self.fc1(x)
-#         x = self.relu(x)
-#         x = self.fc2(x)
-#         return x
-
-
 ###################
 # ProjectionHead  
 ###################
@@ -129,54 +236,6 @@ class ProjectionHead(nn.Module):
         return x
       
     
-# class Encoder(nn.Module):
-#     def __init__(self, n_input, n_latent, n_layers=2, n_hidden=1024, dropout_rate=0,negative_slope=0.01):
-        
-#         super().__init__()
-
-#         self.n_input = n_input
-#         self.n_latent = n_latent
-#         self.n_layers = n_layers
-#         self.n_hidden = n_hidden
-#         self.dropout_rate = dropout_rate
-#         self.negative_slope = negative_slope
-
-#         # Define the hidden layers
-#         self.hidden_layers = nn.ModuleList()
-#         for i in range(self.n_layers - 1):
-#             if(i==0):
-#                 self.hidden_layers.append(nn.Linear(self.n_input, self.n_hidden))
-#             else:
-#                 self.hidden_layers.append(nn.Linear(self.n_hidden, self.n_hidden))
-#             self.hidden_layers.append(nn.BatchNorm1d(self.n_hidden))
-#             self.hidden_layers.append(nn.LeakyReLU(self.negative_slope))
-#             self.hidden_layers.append(nn.Dropout(self.dropout_rate))
-
-#         # Define the output layer
-#         self.output_layer = nn.Linear(self.n_hidden, self.n_latent)
-        
-#         # Define additional layers after the output layer
-#         self.bn_layer = nn.BatchNorm1d(self.n_latent)
-#         self.dropout_layer = nn.Dropout(self.dropout_rate)
-#         self.activation_layer = nn.LeakyReLU(self.negative_slope)
-
-#     def forward(self, x):
-        
-#         # Pass input through the hidden layers
-#         for hidden_layer in self.hidden_layers:
-#             x = hidden_layer(x)
-
-        
-#         # Compute the representations
-#         embeddings = self.output_layer(x)
-
-#         embeddings = self.bn_layer(embeddings)
-#         embeddings = self.activation_layer(embeddings)
-#         embeddings = self.dropout_layer(embeddings)
-        
-
-#         return embeddings
-
 
 class ELU(nn.Module):
 
@@ -237,28 +296,6 @@ class Autoencoder_image(nn.Module):
         encoded = self.encoder(x)
         decoded = self.decoder(encoded)
         return decoded
-
-
-# class CellContrastModel(nn.Module):
-
-
-#     def __init__(self,n_input, n_encoder_hidden=1024,n_encoder_latent=512,n_encoder_layers=2,\
-#                  n_projection_hidden=256,n_projection_output=128,dropout_rate=0,negative_slope=0.01):
-
-#         super(CellContrastModel,self).__init__()
-     
-#         self.encoder = Encoder(n_input, n_encoder_latent, n_encoder_layers, n_encoder_hidden, dropout_rate,negative_slope)
-        
-#         self.projection = ProjectionHead(n_encoder_latent, n_projection_hidden, n_projection_output)
-
-        
-
-#     def forward(self,x):
-        
-#         representation = self.encoder(x)
-#         projection = self.projection(representation)
-        
-#         return representation, projection
     
 
 ########################
@@ -298,6 +335,169 @@ class CellContrastModel(nn.Module):
         projection_image = self.image_projection(representation_image)      
         return representation_matrix, reconstruction_matrix, projection_matrix, representation_image, reconstruction_image, projection_image
 
+
+
+def load_model(dir_name, parameter_file_path, params, gene_hv):    
+    save_folder = os.path.join(dir_name, "epoch_"+str(params["training_epoch"])+".pt")
+    if(dev=="cpu"):
+        checkpoint = torch.load(save_folder,map_location="cpu")
+    else:
+        checkpoint = torch.load(save_folder)
+    
+    model_state_dict = checkpoint['model_state_dict']
+    
+    # load parameter settings
+    with open(parameter_file_path,"r") as json_file:
+        params = json.load(json_file)
+    params['n_input_matrix'] = len(gene_hv)
+    params['n_input_image'] = 384
+    
+    # init the model
+    model = CellContrastModel(n_input_matrix=params['n_input_matrix'],
+                              n_input_image=params['n_input_image'],
+                              n_encoder_hidden_matrix=params["n_encoder_hidden_matrix"],
+                              n_encoder_hidden_image=params["n_encoder_hidden_image"],
+                              n_encoder_latent=params["n_encoder_latent"],
+                              n_projection_hidden=params["n_projection_hidden"],
+                              n_projection_output=params["n_projection_output"],
+                              n_encoder_layers=params["n_encoder_layers"]).to(device)    
+    # load model states
+    model.load_state_dict(model_state_dict)    
+    return model
+
+
+
+
+def perform_inference(model, test_loader):
+    print("device",device)    
+
+    #####################################################################################
+    # for whole dataset
+    #####################################################################################        
+    print("***** Begin perform_inference: ******")
+    
+    input_spot_all, input_image_all, input_coord_all, _, _ = extract_test_data(test_loader)
+            
+    ## input image and matrix
+    matrix_profile = input_spot_all.to(device)
+    image_profile = input_image_all.to(device)
+    ## reshape image
+    image_profile_reshape = image_profile.view(-1, image_profile.shape[2])     # [adata.shape[0], 256, 384] --> [adata.shape[0]*256, 384]
+    input_image_exp = image_profile_reshape.clone().detach().to(device)     # SDU
+
+    ## model
+    (representation_matrix, 
+     reconstructed_matrix, 
+     projection_matrix,
+     representation_image, 
+     reconstruction_iamge, 
+     projection_image) = model(matrix_profile, input_image_exp)     
+    
+    ## reshape
+    _, representation_image_reshape = reshape_latent_image(representation_image)
+    _, projection_image_reshape = reshape_latent_image(projection_image)
+
+    ## cross decoder
+    reconstructed_matrix_reshaped = model.matrix_decoder(representation_image)  
+    _, reconstruction_iamge_reshapef2 = reshape_latent_image(reconstructed_matrix_reshaped)
+    
+    
+    #####################################################################################  
+    # convert
+    #####################################################################################  
+    ## matrix
+    matrix_profile = matrix_profile.cpu().detach().numpy() 
+    reconstructed_matrix = reconstructed_matrix.cpu().detach().numpy() 
+    reconstruction_iamge_reshapef2 = reconstruction_iamge_reshapef2.cpu().detach().numpy() 
+    ## latent space
+    representation_image_reshape = representation_image_reshape.cpu().detach().numpy() 
+    representation_matrix = representation_matrix.cpu().detach().numpy() 
+    ## latent space -- peojection
+    projection_image_reshape = projection_image_reshape.cpu().detach().numpy() 
+    projection_matrix = projection_matrix.cpu().detach().numpy() 
+    ## image
+    input_image_exp = input_image_exp.cpu().detach().numpy() 
+    reconstruction_iamge = reconstruction_iamge.cpu().detach().numpy()
+    # ## tensor recon_f2
+    # reconstructed_matrix_reshaped = reconstructed_matrix_reshaped.cpu().detach().numpy()
+    
+    return (matrix_profile, 
+            reconstructed_matrix, 
+            reconstruction_iamge_reshapef2, 
+            representation_image_reshape,
+            representation_matrix,
+            projection_image_reshape,
+            projection_matrix,
+            input_image_exp,
+            reconstruction_iamge,
+            reconstructed_matrix_reshaped,
+            input_coord_all)
+
+
+def perform_inference_image(model, test_loader):
+    print("device",device)    
+
+    #####################################################################################
+    # for whole dataset
+    #####################################################################################        
+    print("***** Begin perform_inference: ******")
+    
+    input_spot_all, input_image_all, input_coord_all, _, _ = extract_test_data(test_loader)
+            
+    ## input image and matrix
+    matrix_profile = input_spot_all.to(device)
+    image_profile = input_image_all.to(device)
+    ## reshape image
+    image_profile_reshape = image_profile.view(-1, image_profile.shape[2])     # [1331, 256, 384] --> [1331*256, 384]
+    input_image_exp = image_profile_reshape.clone().detach().to(device)     # SDU
+    
+    ## useful model
+    representation_matrix = model.matrix_encoder(matrix_profile)
+    reconstructed_matrix = model.matrix_decoder(representation_matrix)
+    projection_matrix = model.matrix_projection(representation_matrix)  
+    representation_image = model.image_encoder(input_image_exp) 
+    reconstruction_iamge = model.image_decoder(representation_image)
+    projection_image = model.image_projection(representation_image)
+
+    ## reshape
+    _, representation_image_reshape = reshape_latent_image(representation_image)
+    _, projection_image_reshape = reshape_latent_image(projection_image)
+
+    ## cross decoder
+    reconstructed_matrix_reshaped = model.matrix_decoder(representation_image)  
+    _, reconstruction_iamge_reshapef2 = reshape_latent_image(reconstructed_matrix_reshaped)
+    
+    
+    #####################################################################################  
+    # convert
+    #####################################################################################  
+    ## matrix
+    matrix_profile = matrix_profile.cpu().detach().numpy() 
+    reconstructed_matrix = reconstructed_matrix.cpu().detach().numpy() 
+    reconstruction_iamge_reshapef2 = reconstruction_iamge_reshapef2.cpu().detach().numpy() 
+    ## latent space
+    representation_image_reshape = representation_image_reshape.cpu().detach().numpy() 
+    representation_matrix = representation_matrix.cpu().detach().numpy() 
+    ## latent space -- peojection
+    projection_image_reshape = projection_image_reshape.cpu().detach().numpy() 
+    projection_matrix = projection_matrix.cpu().detach().numpy() 
+    ## image
+    input_image_exp = input_image_exp.cpu().detach().numpy() 
+    reconstruction_iamge = reconstruction_iamge.cpu().detach().numpy()
+    # ## tensor recon_f2
+    # reconstructed_matrix_reshaped = reconstructed_matrix_reshaped.cpu().detach().numpy()
+    
+    return (matrix_profile, 
+            reconstructed_matrix, 
+            reconstruction_iamge_reshapef2, 
+            representation_image_reshape,
+            representation_matrix,
+            projection_image_reshape,
+            projection_matrix,
+            input_image_exp,
+            reconstruction_iamge,
+            reconstructed_matrix_reshaped,
+            input_coord_all)
 
 
 # if __name__ == '__main__':
