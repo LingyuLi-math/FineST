@@ -1,10 +1,7 @@
-import os
 import pandas as pd
 import numpy as np
 from sklearn.neighbors import NearestNeighbors
 from statsmodels.stats.multitest import fdrcorrection
-from scipy import spatial
-# import json
 from threadpoolctl import threadpool_limits
 from .utils import *
 from itertools import zip_longest

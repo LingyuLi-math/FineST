@@ -19,8 +19,6 @@ selenium
 
 # Machine learning
 numpy
-random
-json==2.0.9
 scikit-learn>=0.23
 hilearn
 
@@ -28,6 +26,5 @@ hilearn
 # torch==1.7.1+cu110
 
 # Others
-logging==0.5.1.2
 threadpoolctl
 tqdm

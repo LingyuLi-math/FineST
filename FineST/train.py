@@ -1,160 +1,152 @@
-from argparse import ArgumentParser, SUPPRESS
-import json
-import sys
-import os
-import scanpy as sc
-# from cellContrast.model import *
-# import cellContrast.loadData as loadData
 import torch
 import numpy as np
-from tqdm import tqdm
-import time
 from .utils import *
-import anndata
+from .loadData import * 
 
-
-sample_field_name = 'NPC1'
 
 #################################################################
 # 2024.9.16 NameError: name 'loadBatchData' is not defined
 #################################################################
-def loadBatchData(train_image_mat, train_matrix_mat, train_coors_mat, batch_size, pos_info):
-    '''
-    Generate batch training data   
-    '''
+# def loadBatchData(train_image_mat, train_matrix_mat, train_coors_mat, batch_size, pos_info):
+#     '''
+#     Generate batch training data   
+#     '''
     
-    train_pos_dist = pos_info['pos dist']
-    train_pos_ind = pos_info['pos ind']
+#     train_pos_dist = pos_info['pos dist']
+#     train_pos_ind = pos_info['pos ind']
     
-    train_index_list = list(range(train_image_mat.shape[0]))
-    random.shuffle(train_index_list)
+#     train_index_list = list(range(train_image_mat.shape[0]))
+#     random.shuffle(train_index_list)
 
     
-    train_data_size = train_image_mat.shape[0]
+#     train_data_size = train_image_mat.shape[0]
 
-    half_batch_size =  int(batch_size/2)
-    batch_num = train_data_size//half_batch_size
+#     half_batch_size =  int(batch_size/2)
+#     batch_num = train_data_size//half_batch_size
     
-    for i in range(batch_num):
+#     for i in range(batch_num):
         
-        start = i*half_batch_size
-        end = start + half_batch_size
+#         start = i*half_batch_size
+#         end = start + half_batch_size
         
-        tmp_index_list =  list(train_index_list[start:end])
+#         tmp_index_list =  list(train_index_list[start:end])
        
-        pos_peer_index = []
+#         pos_peer_index = []
 
-        neighbor_index = np.zeros((batch_size, batch_size))
+#         neighbor_index = np.zeros((batch_size, batch_size))
         
-        count = 0
-        pos_index_list = []
-        for j in tmp_index_list:
+#         count = 0
+#         pos_index_list = []
+#         for j in tmp_index_list:
              
-            cur_pos_peer_index = np.copy(train_pos_ind[j])
-            ## shummin           
-            # random.shuffle(cur_pos_peer_index)
-            # pos_index_list.append(cur_pos_peer_index[0])
+#             cur_pos_peer_index = np.copy(train_pos_ind[j])
+#             ## shummin           
+#             # random.shuffle(cur_pos_peer_index)
+#             # pos_index_list.append(cur_pos_peer_index[0])
             
-            ## when only select itself, adjust this
-            # random.shuffle(cur_pos_peer_index)
-            pos_index_list.append(cur_pos_peer_index)
+#             ## when only select itself, adjust this
+#             # random.shuffle(cur_pos_peer_index)
+#             pos_index_list.append(cur_pos_peer_index)
             
-            neighbor_index[count][half_batch_size+count] = 1 
-            neighbor_index[half_batch_size+count][count] = 1
+#             neighbor_index[count][half_batch_size+count] = 1 
+#             neighbor_index[half_batch_size+count][count] = 1
  
-            count += 1
+#             count += 1
      
-        tmp_index_list.extend(pos_index_list)
-        cur_index_list = np.asarray(tmp_index_list)
-        cur_batch_mat = np.take(train_image_mat.cpu(), cur_index_list, axis=0)
-        cur_matrix_mat = np.take(train_matrix_mat.cpu(), cur_index_list, axis=0)
+#         tmp_index_list.extend(pos_index_list)
+#         cur_index_list = np.asarray(tmp_index_list)
+#         cur_batch_mat = np.take(train_image_mat.cpu(), cur_index_list, axis=0)
+#         cur_matrix_mat = np.take(train_matrix_mat.cpu(), cur_index_list, axis=0)
         
-        yield cur_batch_mat, cur_matrix_mat, neighbor_index, cur_index_list        
+#         yield cur_batch_mat, cur_matrix_mat, neighbor_index, cur_index_list        
 
-    pass
+#     pass
+
+
+
 
 
 #################################################################
 # 2024.9.16 NameError: name 'loadTrainTestData' is not defined
 #################################################################
-def loadTrainTestData(train_loader, neighbor_k):
+# def loadTrainTestData(train_loader, neighbor_k):
     
-    tqdm_object = tqdm(train_loader, total=len(train_loader))
+#     tqdm_object = tqdm(train_loader, total=len(train_loader))
 
-    matrix_data = []
-    image_data = []
-    spatial_coords_list = []
-    array_row_list = []
-    array_col_list = []
+#     matrix_data = []
+#     image_data = []
+#     spatial_coords_list = []
+#     array_row_list = []
+#     array_col_list = []
 
-    for batch in tqdm_object:
-        # Load data
-        matrix_data.append(batch["reduced_expression"].clone().detach().cuda())
-        image_data.append(batch["image"].clone().detach().cuda())
+#     for batch in tqdm_object:
+#         # Load data
+#         matrix_data.append(batch["reduced_expression"].clone().detach().cuda())
+#         image_data.append(batch["image"].clone().detach().cuda())
 
-        # Process each batch's spatial_coords
-        spatial_coords = batch["spatial_coords"]
-        combined_coords = torch.stack((spatial_coords[0], spatial_coords[1]), dim=1)
-        spatial_coords_list.append(combined_coords)
+#         # Process each batch's spatial_coords
+#         spatial_coords = batch["spatial_coords"]
+#         combined_coords = torch.stack((spatial_coords[0], spatial_coords[1]), dim=1)
+#         spatial_coords_list.append(combined_coords)
 
-        array_row = batch["array_row"]
-        array_row_list.append(array_row)
-        array_col = batch["array_col"]
-        array_col_list.append(array_col)
+#         array_row = batch["array_row"]
+#         array_row_list.append(array_row)
+#         array_col = batch["array_col"]
+#         array_col_list.append(array_col)
 
-    # Matrix data
-    matrix_tensor = torch.cat(matrix_data).to(device)
-    # Coord data
-    spatial_coords_list_all = torch.cat(spatial_coords_list).to(device)
-    array_row_list_all = torch.cat(array_row_list).to(device)
-    array_col_list_all = torch.cat(array_col_list).to(device)
-    # Image data
-    image_tensor = torch.cat(image_data).to(device)
-    image_tensor = image_tensor.view(image_tensor.shape[0] * image_tensor.shape[1], image_tensor.shape[2])
-    inputdata_reshaped, latent_image_reshape = reshape_latent_image(image_tensor)
-    latent_representation_image_arr = latent_image_reshape.cpu().detach().numpy()
+#     # Matrix data
+#     matrix_tensor = torch.cat(matrix_data).to(device)
+#     # Coord data
+#     spatial_coords_list_all = torch.cat(spatial_coords_list).to(device)
+#     array_row_list_all = torch.cat(array_row_list).to(device)
+#     array_col_list_all = torch.cat(array_col_list).to(device)
+#     # Image data
+#     image_tensor = torch.cat(image_data).to(device)
+#     image_tensor = image_tensor.view(image_tensor.shape[0] * image_tensor.shape[1], image_tensor.shape[2])
+#     inputdata_reshaped, latent_image_reshape = reshape_latent_image(image_tensor)
+#     latent_representation_image_arr = latent_image_reshape.cpu().detach().numpy()
 
-    # Create adata_latent object
-    adata_latent = anndata.AnnData(X=latent_representation_image_arr)
-    adata_latent.obsm['spatial'] = np.array(spatial_coords_list_all.cpu())
-    adata_latent.obs['array_row'] = np.array(array_row_list_all.cpu())
-    adata_latent.obs['array_col'] = np.array(array_col_list_all.cpu())
+#     # Create adata_latent object
+#     adata_latent = anndata.AnnData(X=latent_representation_image_arr)
+#     adata_latent.obsm['spatial'] = np.array(spatial_coords_list_all.cpu())
+#     adata_latent.obs['array_row'] = np.array(array_row_list_all.cpu())
+#     adata_latent.obs['array_col'] = np.array(array_col_list_all.cpu())
 
-    train_genes = adata_latent.var_names
+#     train_genes = adata_latent.var_names
 
-    # Generate training data representation, training coordinate matrix, and positive sample information
-    cur_train_data_mat = inputdata_reshaped
-    cur_train_coors_mat = np.column_stack((adata_latent.obs['array_row'], adata_latent.obs['array_col']))
-    cur_train_matrix_mat = matrix_tensor
+#     # Generate training data representation, training coordinate matrix, and positive sample information
+#     cur_train_data_mat = inputdata_reshaped
+#     cur_train_coors_mat = np.column_stack((adata_latent.obs['array_row'], adata_latent.obs['array_col']))
+#     cur_train_matrix_mat = matrix_tensor
 
-    # Generate positive pair information
-    pos_dist, pos_ind = checkNeighbors(adata_latent, neighbor_k)
-    cur_pos_info = {'pos dist': pos_dist, 'pos ind': pos_ind}
+#     # Generate positive pair information
+#     pos_dist, pos_ind = checkNeighbors(adata_latent, neighbor_k)
+#     cur_pos_info = {'pos dist': pos_dist, 'pos ind': pos_ind}
 
-    return cur_train_data_mat, cur_train_matrix_mat, cur_train_coors_mat, cur_pos_info
+#     return cur_train_data_mat, cur_train_matrix_mat, cur_train_coors_mat, cur_pos_info
 
 
 #################################################################
 # 2024.9.16 NameError: name 'checkNeighbors' is not defined
 #################################################################
-def checkNeighbors(cur_adata, neighbor_k):
-    '''
-    Return 'dist' and 'ind' of positive samples.    
-    '''
-    print("checkNeighbors.............")
+# def checkNeighbors(cur_adata, neighbor_k):
+#     '''
+#     Return 'dist' and 'ind' of positive samples.    
+#     '''
+#     print("checkNeighbors.............")
     
-    cur_coor = np.column_stack((cur_adata.obs['array_row'].values, cur_adata.obs['array_col'].values))
-    cur_coor_tree = KDTree(cur_coor, leaf_size=2)
-    location_dist, location_ind  = cur_coor_tree.query(cur_coor, k=(neighbor_k+1))
-    ## Need to consider the selected location itself
-    location_dist = location_dist[:,0]
-    location_ind = location_ind[:,0]
+#     cur_coor = np.column_stack((cur_adata.obs['array_row'].values, cur_adata.obs['array_col'].values))
+#     cur_coor_tree = KDTree(cur_coor, leaf_size=2)
+#     location_dist, location_ind  = cur_coor_tree.query(cur_coor, k=(neighbor_k+1))
+#     ## Need to consider the selected location itself
+#     location_dist = location_dist[:,0]
+#     location_ind = location_ind[:,0]
 
-    ## shumin
-    # location_dist = location_dist[:,1:]
-    # location_ind = location_ind[:,1:]
+#     ## shumin
+#     # location_dist = location_dist[:,1:]
+#     # location_ind = location_ind[:,1:]
     
-    return location_dist, location_ind
+#     return location_dist, location_ind
 
 
 
@@ -180,10 +172,10 @@ def save_model(model, dir_name, params, optimizer, LOSS):
                    }, cur_save_path)
     
 
-def reshape_latent_image(inputdata):    ## [adata.shape[0]*256, 384]  -->  [adata.shape[0], 384]
-    inputdata_reshaped = inputdata.view(int(inputdata.shape[0]/16), 16, inputdata.shape[1])  # [adata.shape[0], 256, 384]
-    average_inputdata_reshaped = torch.sum(inputdata_reshaped, dim=1) / inputdata_reshaped.size(1)
-    return inputdata_reshaped, average_inputdata_reshaped
+# def reshape_latent_image(inputdata):    ## [adata.shape[0]*256, 384]  -->  [adata.shape[0], 384]
+#     inputdata_reshaped = inputdata.view(int(inputdata.shape[0]/16), 16, inputdata.shape[1])  # [adata.shape[0], 256, 384]
+#     average_inputdata_reshaped = torch.sum(inputdata_reshaped, dim=1) / inputdata_reshaped.size(1)
+#     return inputdata_reshaped, average_inputdata_reshaped
 
     
 def train_model(params, model, train_loader, optimizer, cur_epoch, l): 
