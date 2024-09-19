@@ -5,12 +5,12 @@ from .loadData import *
 
 
 
-# set the device
-if torch.cuda.is_available():
-    dev = "cuda:0"
-else:
-    dev = "cpu"
-device = torch.device(dev)
+# # set the device
+# if torch.cuda.is_available():
+#     dev = "cuda:0"
+# else:
+#     dev = "cpu"
+# device = torch.device(dev)
 
 
 
