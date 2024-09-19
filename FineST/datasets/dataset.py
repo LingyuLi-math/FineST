@@ -16,6 +16,13 @@ _BRCA_FineST_allspot = AMetadata(
     url="https://figshare.com/ndownloader/files/49070155",
 )
 
+_BRCA_Original_whole = AMetadata(
+    name="BRCA_Original_whole",
+    doc_header="Breast cancer (BRCA) dataset (all spots) from `Janesick et al <https://doi/10.1038/s41467-023-43458-x`__.",
+    shape=(4992, 18085),
+    url="https://figshare.com/ndownloader/files/49286560",
+)
+
 _BRCA_FineST_subspot = AMetadata(
     name="BRCA_FineST_subspot",
     doc_header="Breast cancer (BRCA) dataset from `Janesick et al <https://doi/10.1038/s41467-023-43458-x`__.",
@@ -86,4 +93,4 @@ for name, var in copy(locals()).items():
 
 
 __all__ = [  # noqa: F822
-    "NPC", "BRCA_FineST_allspot", "BRCA_FineST_subspot", "CRC_Original", "CRC_FineST", "A3","A4","A6","A7","A8","A9"]
+    "NPC", "BRCA_FineST_allspot", "BRCA_Original_whole", "BRCA_FineST_subspot", "CRC_Original", "CRC_FineST", "A3","A4","A6","A7","A8","A9"]

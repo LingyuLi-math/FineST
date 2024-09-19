@@ -9,16 +9,16 @@ import  logging
 logging.getLogger().setLevel(logging.INFO)
 
 
-## set the device
-if torch.cuda.is_available():
-    dev = "cuda:0"
-else:
-    dev = "cpu"
-device = torch.device(dev)
+# ## set the device
+# if torch.cuda.is_available():
+#     dev = "cuda:0"
+# else:
+#     dev = "cpu"
+# device = torch.device(dev)
 
 
-## Set the random seed for PyTorch and NumPy
-torch.manual_seed(666)
+# ## Set the random seed for PyTorch and NumPy
+# torch.manual_seed(666)
 
 
 #######################################################################
