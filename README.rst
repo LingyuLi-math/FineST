@@ -58,6 +58,7 @@ Alternatively,
    $ git clone https://github.com/LingyuLi-math/FineST.git
    $ conda create --name FineST python=3.8
    $ conda activate FineST
+   $ cd FineST
    $ pip install -r requirements.txt
 Typically installation is expected to be completed within a few minutes. 
 
