@@ -4,9 +4,10 @@ from . import datasets
 from .main import *
 from .version import __version__
 
+from .loadData import *
 from .model import *
 from .train import *
-from .test import *
-from .loadData import *
 from .inference import *
 from .base import *
+from FineST.evaluation import * 
+from FineST.imputation import * 

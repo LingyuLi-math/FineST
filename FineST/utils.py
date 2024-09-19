@@ -1,27 +1,12 @@
 """
 Utils of permutation calculation
 """
-import pandas as pd
 import numpy as np
 import random
-from scipy import stats
-from tqdm import tqdm
-from scipy.sparse import csc_matrix, csr_matrix, issparse, hstack
-import torch
-
-from sklearn.metrics.pairwise import cosine_similarity
-import numpy as np
-from scipy import sparse
 import pandas as pd
-from sklearn.neighbors import KDTree
-from collections import Counter
-from scipy.spatial.distance import jensenshannon
-from tqdm import tqdm
-from scipy.stats import spearmanr
 import torch
-import  logging
+import logging
 import os
-
 
 
 ## set the random seed
@@ -33,6 +18,7 @@ def setup_seed(seed):
     random.seed(seed)
     torch.backends.cudnn.deterministic = True
     torch.backends.cudnn.benchmark = False
+
 
 ## set the logging
 def setup_logger(model_save_folder):
@@ -70,7 +56,6 @@ def reshape_latent_image(inputdata):    ## [adata.shape[0]*256, 384]  -->  [adat
     inputdata_reshaped = inputdata.view(int(inputdata.shape[0]/16), 16, inputdata.shape[1])  # [adata.shape[0], 256, 384]
     average_inputdata_reshaped = torch.sum(inputdata_reshaped, dim=1) / inputdata_reshaped.size(1)
     return inputdata_reshaped, average_inputdata_reshaped
-
 
 
 

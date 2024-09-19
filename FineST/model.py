@@ -2,14 +2,12 @@ import torch
 from torch import nn
 import torch.nn.functional as F
 from .utils import *
-# from cellContrast.model import *
-# from cellContrast import utils
 import os
 import json
 import numpy as np
 import  logging
 logging.getLogger().setLevel(logging.INFO)
-from .utils import *
+
 
 ## set the device
 if torch.cuda.is_available():
