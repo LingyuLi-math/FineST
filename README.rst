@@ -1,6 +1,6 @@
-"""
-FineST: Fine-grained Spatial Transcriptomic
-===========================================
+===============================================================
+SpatialDM: Spatial Direct Messaging Detected by bivariate Moran
+===============================================================
 
 About
 =====
@@ -75,10 +75,4 @@ spatially co-expressed.
 Detailed Manual
 ===============
 
-The full manual is at `finest-rtd-tutorial <https://finest-rtd-tutorial.readthedocs.io>`_, including:
-
-References
-==========
-
-FineST manuscript with more details is available on `bioRxiv <https://www.biorxiv.org/content/10.1101/2022.08.19.504616v1>`_ now and is currently under review.
-"""
+The full manual is at `finest-rtd-tutorial <https://finest-rtd-tutorial.readthedocs.io>`_, including.

@@ -17,6 +17,7 @@ exec(open("./FineST/version.py").read())
 
 # Get the long description from the relevant file
 long_description=Path("README.rst").read_text("utf-8")
+long_description_content_type='text/x-rst'
 
 setup(
     name='FineST',
@@ -28,6 +29,7 @@ setup(
 
     description='FineST: Fine-grained Spatial Transcriptomic',
     long_description=long_description,
+    long_description_content_type='text/x-rst',
 
     # The project's main homepage.
     url='https://github.com/LingyuLi-math/FineST',
