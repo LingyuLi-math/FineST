@@ -80,5 +80,5 @@ The full manual is at `finest-rtd-tutorial <https://finest-rtd-tutorial.readthed
 References
 ==========
 
-FineST manuscript with more details is available on `bioRxiv <https://www.biorxiv.org/content/10.1101/2022.08.19.504616v1/>`_ now and is currently under review.
+FineST manuscript with more details is available on `bioRxiv <https://www.biorxiv.org/content/10.1101/2022.08.19.504616v1>`_ now and is currently under review.
 """
