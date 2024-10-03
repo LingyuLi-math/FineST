@@ -1,48 +1,50 @@
-===========================================================================================================
+"""
 FineST: Fine-grained Spatial Transcriptomic
-===========================================================================================================
+===========================================
 
 About
 =====
 
-FineST (Fine_-grained S_ patial T_ ranscriptomics), a statistical model and toolbox to identify the super-resolved ligand-receptor interaction with spatial co-expression (i.e., spatial association). \
+FineST (Fine-grained Spatial Transcriptomics), a statistical model and toolbox to identify the super-resolved ligand-receptor interaction with spatial co-expression (i.e., spatial association).
 
 Uniquely, FineST can distinguish co-expressed ligand-receptor pairs (LR pairs) from spatially separating pairs at sub-spot level or single-cell level, and identify the super-resolved interaction.
 
 .. image:: https://github.com/LingyuLi-math/FineST/blob/main/docs/fig/FineST_framework.png?raw=true
-   :width: 900px
+   :width: 600px
    :align: center
 
-It comprises two main steps: \
-1) Fine-grained ligand-receptor pair discovery; \
-2) Cell-cell communication pattern classification; \
-3) Pathway enrichment analysis.
+It comprises two main steps:
+
+1. Fine-grained ligand-receptor pair discovery;
+2. Cell-cell communication pattern classification;
+3. Pathway enrichment analysis.
 
 .. image:: https://github.com/LingyuLi-math/FineST/blob/main/docs/fig/Downstream.png?raw=true
-   :width: 900px
+   :width: 600px
    :align: center
 
 With the analytical testing method, FineST accurately predicts ST gene expression and outperforms TESLA and iStar at both spot and gene levels in terms of the root mean square error (RMSE) and Pearson correlation coefficient (PCC) between the predicted gene expressions and ground truth.
 
 .. image:: https://github.com/LingyuLi-math/FineST/blob/main/docs/fig/OtherMethods.png?raw=true
-   :width: 900px
+   :width: 600px
    :align: center
-   
-It comprises two main steps: \
-1) global selection `spatialdm_global` to identify significantly interacting LR pairs; \
-2) local selection `spatialdm_local` to identify local spots for each interaction.
+
+It comprises two main steps:
+
+1. global selection `spatialdm_global` to identify significantly interacting LR pairs;
+2. local selection `spatialdm_local` to identify local spots for each interaction.
 
 Installation
 ============
 
-FineST is available through `PyPI <https://pypi.org/project/FineST/>`_. 
+FineST is available through `PyPI <https://pypi.org/project/FineST/>`_.
 To install, type the following command line and add ``-U`` for updates:
 
 .. code-block:: bash
 
    pip install -U FineST
 
-Alternatively, you can install from this GitHub repository for latest (often 
+Alternatively, you can install from this GitHub repository for latest (often
 development) version by the following command line:
 
 .. code-block:: bash
@@ -51,7 +53,7 @@ development) version by the following command line:
 
 Installation time: < 1 min
 
-Alternatively, 
+Alternatively,
 
 .. code-block:: bash
 
@@ -61,35 +63,22 @@ Alternatively,
    $ cd FineST
    $ pip install -r requirements.txt
 
-Typically installation is expected to be completed within a few minutes. 
-
+Typically installation is expected to be completed within a few minutes.
 
 Quick example
 =============
 
 Using the build-in NPC dataset as an example, the following Python script
-will predict super-resolution ST gene expression and compute the p-value indicating whether a certain Ligand-Receptor is 
-spatially co-expressed. 
-
+will predict super-resolution ST gene expression and compute the p-value indicating whether a certain Ligand-Receptor is
+spatially co-expressed.
 
 Detailed Manual
 ===============
 
-The full manual is at https://finest-rtd-tutorial.readthedocs.io, including:  
-
-* `Sub-spot level prediction (Recommended for small datasets, <2k spots)`_.
-
-* `Sing-cell level prediction (Recommended for small datasets, <2k spots)`_.
-
-.. _Sub-spot level prediction: tutorial/AEContraNPC1_16_LRgene_clear_0618pvalue.ipynb
-
-.. _Sing-cell level prediction: tutorial/scAEContraNPC1_16_LRgene_clear_0604.ipynb
-
+The full manual is at `finest-rtd-tutorial <https://finest-rtd-tutorial.readthedocs.io>`_, including:
 
 References
 ==========
 
-SpatialDM manuscript with more details is available on bioRxiv_ now and is currently under review.
-
-.. _bioRxiv: https://www.biorxiv.org/content/10.1101/2022.08.19.504616v1/
-
+FineST manuscript with more details is available on `bioRxiv <https://www.biorxiv.org/content/10.1101/2022.08.19.504616v1/>`_ now and is currently under review.
+"""
