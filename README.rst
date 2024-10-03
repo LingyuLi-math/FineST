@@ -1,5 +1,5 @@
 ===========================================================================================================
-FineST: Super resolved ligand-receptor interaction discovery by fusing spatial RNA-seq and histology images 
+FineST: Fine-grained Spatial Transcriptomic
 ===========================================================================================================
 
 About
@@ -71,32 +71,6 @@ will predict super-resolution ST gene expression and compute the p-value indicat
 spatially co-expressed. 
 
 
-.. code-block:: python
-
-        import spatialdm as sdm
-        adata = sdm.datasets.dataset.melanoma()
-        sdm.weight_matrix(adata, l=1.2, cutoff=0.2, single_cell=False) # weight_matrix by rbf kernel
-        sdm.extract_lr(adata, 'human', min_cell=3)      # find overlapping LRs from CellChatDB
-        sdm.spatialdm_global(adata, 1000, specified_ind=None, method='both', nproc=1)     # global Moran selection
-        sdm.sig_pairs(adata, method='permutation', fdr=True, threshold=0.1)     # select significant pairs
-        sdm.spatialdm_local(adata, n_perm=1000, method='both', specified_ind=None, nproc=1)     # local spot selection
-        sdm.sig_spots(adata, method='permutation', fdr=False, threshold=0.1)     # significant local spots
-
-        # visualize global and local pairs
-        import spatialdm.plottings as pl
-        pl.global_plot(adata, pairs=['SPP1_CD44'])
-        pl.plot_pairs(adata, ['SPP1_CD44'], marker='s')
- 
-.. image:: https://github.com/LingyuLi-math/FineST/blob/main/docs/figs/global_plot.png?raw=true
-   :width: 200px
-   :align: center
-   
-.. image:: https://github.com/LingyuLi-math/FineST/blob/main/docs/figs/SPP1_CD44.png?raw=true
-   :width: 600px
-   :align: center
-
-
-
 Detailed Manual
 ===============
 
@@ -109,8 +83,6 @@ The full manual is at https://finest-rtd-tutorial.readthedocs.io, including:
 .. _Sub-spot level prediction: tutorial/AEContraNPC1_16_LRgene_clear_0618pvalue.ipynb
 
 .. _Sing-cell level prediction: tutorial/scAEContraNPC1_16_LRgene_clear_0604.ipynb
-
-
 
 
 References
