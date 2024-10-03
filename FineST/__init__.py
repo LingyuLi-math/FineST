@@ -8,6 +8,6 @@ from .loadData import *
 from .model import *
 from .train import *
 from .inference import *
-from .base import *
+from .base_update import *
 from FineST.evaluation import * 
 from FineST.imputation import * 
