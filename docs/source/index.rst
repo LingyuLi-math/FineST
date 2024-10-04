@@ -56,5 +56,5 @@ FineST manuscript with more details is available on bioRxiv_ now and is currentl
    :maxdepth: 1
    :hidden:
 
-   BRCA_Train2
+   BRCA_Train2.ipynb
 
