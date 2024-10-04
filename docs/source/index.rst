@@ -47,7 +47,6 @@ FineST manuscript with more details is available on bioRxiv_ now and is currentl
    :hidden:
 
    install
-
    release
 
 .. toctree::
