@@ -47,6 +47,10 @@ extensions = [
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
+# The suffix of source filenames.
+source_suffix = ['.rst']
+## don't add '.ipynb' for nbsphinx>=0.8.7
+
 # The root document.
 root_doc = 'index'
 
