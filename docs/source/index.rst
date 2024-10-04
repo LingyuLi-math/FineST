@@ -57,7 +57,6 @@ FineST manuscript with more details is available on bioRxiv_ now and is currentl
    index
    install
    usage
-   api
    release
 
    .. toctree::
