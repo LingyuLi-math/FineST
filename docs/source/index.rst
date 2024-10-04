@@ -34,11 +34,11 @@ how to :ref:`installation` the project.
 
 Please refer to our tutorials for details:
 
-* `Sub-spot level prediction (Recommended for small datasets, <2k spots)`_.
+* `Sub-spot level prediction`_.
 
 * `Sing-cell level prediction`_.
 
-.. _Sub-spot level prediction: tutorial/AEContraNPC1_16_LRgene_clear_0618pvalue.ipynb
+.. _Sub-spot level prediction: BRCA_Train2.ipynb
 
 .. _Sing-cell level prediction: tutorial/scAEContraNPC1_16_LRgene_clear_0604.ipynb
 
@@ -62,11 +62,3 @@ FineST manuscript with more details is available on bioRxiv_ now and is currentl
    usage.rst
    BRCA_Train2.ipynb
    release
-
-.. toctree::
-   :caption: Examples
-   :maxdepth: 1
-   :hidden:
-
-   melanoma
-   differential_test_intestine
