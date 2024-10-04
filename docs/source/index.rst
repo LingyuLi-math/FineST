@@ -51,6 +51,6 @@ FineST manuscript with more details is available on bioRxiv_ now and is currentl
    :hidden:
 
    install
+   BRCA_Train2.ipynb
    release
-   BRCA_Train.ipynb
 
