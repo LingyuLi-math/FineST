@@ -5,6 +5,7 @@
 .. |Docs| image:: https://readthedocs.org/projects/finest-rtd-tutorial/badge/?version=latest
    :target: https://finest-rtd-tutorial.readthedocs.io/en/latest/?badge=latest
    :alt: Documentation Status
+   
 ====
 Home
 ====
@@ -43,6 +44,7 @@ FineST manuscript with more details is available on bioRxiv_ now and is currentl
 
 
 .. toctree::
+   :caption: Main
    :maxdepth: 1
    :hidden:
 

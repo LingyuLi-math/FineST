@@ -25,19 +25,19 @@ sys.path.insert(0, os.path.abspath('.'))
 
 # -- Retrieve notebooks ------------------------------------------------
 
-from urllib.request import urlretrieve
+# from urllib.request import urlretrieve
 
-notebooks_url = "https://github.com/LingyuLi-math/FineST/tree/main/tutorial/"
-notebooks = [
-    # "AEContraNPC1_16_LRgene_clear_0618pvalue.ipynb",
-    # "scAEContraNPC1_16_LRgene_clear_0604.ipynb"
-    "BRCA_Train2.ipynb"
-]
-for nb in notebooks:
-    try:
-        urlretrieve(notebooks_url + nb, nb)
-    except:
-        raise ValueError(f'{nb} cannot be retrieved.')
+# notebooks_url = "https://github.com/LingyuLi-math/FineST/tree/main/tutorial/"
+# notebooks = [
+#     # "AEContraNPC1_16_LRgene_clear_0618pvalue.ipynb",
+#     # "scAEContraNPC1_16_LRgene_clear_0604.ipynb"
+#     "BRCA_Train2.ipynb"
+# ]
+# for nb in notebooks:
+#     try:
+#         urlretrieve(notebooks_url + nb, nb)
+#     except:
+#         raise ValueError(f'{nb} cannot be retrieved.')
 
 # -- Project information -----------------------------------------------------
 
