@@ -23,9 +23,6 @@ Uniquely, **FineST** can distinguish co-expressed ligand-receptor pairs (LR pair
    :width: 600px
    :align: center
 
-Check out the :doc:`usage` section for further information, including
-how to :ref:`installation` the project.
-
 .. note::
 
    This project is under active development.
@@ -50,19 +47,10 @@ FineST manuscript with more details is available on bioRxiv_ now and is currentl
 
 
 .. toctree::
-   :caption: Main
    :maxdepth: 1
    :hidden:
-   
-   index
+
    install
-   usage
    release
-
-   .. toctree::
-   :caption: Examples
-   :maxdepth: 1
-   :hidden:
-
-   BRCA_Train2
+   BRCA_Train2.ipynb
 
