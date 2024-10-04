@@ -1,12 +1,10 @@
-|PyPI| |Docs| |Build Status|
+|PyPI| |Docs|
 
-.. |PyPI| image:: https://img.shields.io/pypi/v/SpatialDM.svg
-    :target: https://pypi.org/project/SpatialDM/
-.. |Docs| image:: https://readthedocs.org/projects/spatialdm/badge/?version=latest
-   :target: https://SpatialDM.readthedocs.io
-.. |Build Status| image:: https://travis-ci.org/leeyoyohku/SpatialDM.svg?branch=main
-   :target: https://travis-ci.org/leeyoyohku/SpatialDM
-
+.. |PyPI| image:: https://badge.fury.io/py/FineST@2x.png
+    :target: https://badge.fury.io/py/FineST
+.. |Docs| image:: https://readthedocs.org/projects/finest-rtd-tutorial/badge/?version=latest
+   :target: https://finest-rtd-tutorial.readthedocs.io/en/latest/?badge=latest
+   :alt: Documentation Status
 
 Home
 ====
@@ -58,7 +56,14 @@ FineST manuscript with more details is available on bioRxiv_ now and is currentl
    
    index
    install
+   usage
    api
-   usage.rst
-   BRCA_Train2.ipynb
    release
+
+   .. toctree::
+   :caption: Examples
+   :maxdepth: 1
+   :hidden:
+
+   BRCA_Train2
+
