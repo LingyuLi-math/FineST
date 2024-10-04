@@ -5,7 +5,7 @@
 .. |Docs| image:: https://readthedocs.org/projects/finest-rtd-tutorial/badge/?version=latest
    :target: https://finest-rtd-tutorial.readthedocs.io/en/latest/?badge=latest
    :alt: Documentation Status
-
+====
 Home
 ====
 
