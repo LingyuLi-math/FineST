@@ -58,8 +58,9 @@ FineST manuscript with more details is available on bioRxiv_ now and is currentl
    
    index
    install
-   quick_start
    api
+   usage.rst
+   BRCA_Train2.ipynb
    release
 
 .. toctree::
