@@ -63,7 +63,21 @@ Alternatively,
    $ cd FineST
    $ pip install -r requirements.txt
 
-Typically installation is expected to be completed within a few minutes.
+Typically installation is expected to be completed within a few minutes. 
+Then install pytorch. You may refer to `pytorch installation <https://pytorch.org/get-started/locally/>`_.
+
+.. code-block:: bash
+
+   $ conda install pytorch=1.7.1 torchvision torchaudio cudatoolkit=11.0 -c pytorch
+
+Once the installation is complete, you can verify the installation using the following command:
+
+.. code-block:: bash
+
+   python
+   >>> import torch
+   >>> print(torch.__version__)
+   >>> print(torch.cuda.is_available())
 
 Quick example
 =============
