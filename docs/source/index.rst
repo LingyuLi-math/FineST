@@ -28,11 +28,11 @@ Uniquely, **FineST** can distinguish co-expressed ligand-receptor pairs (LR pair
 
    This project is under active development.
 
-.. Please refer to our tutorials for details:
+Please refer to our tutorials for details:
 
-.. * `Sub-spot level prediction`_.
+* `Sub-spot level prediction`_.
 
-.. .. _Sub-spot level prediction: BRCA_Train2.ipynb
+.. _Sub-spot level prediction: BRCA_Train2.ipynb
 
 
 References
@@ -51,10 +51,10 @@ FineST manuscript with more details is available on bioRxiv_ now and is currentl
    install
    release
 
-.. .. toctree::
-..    :caption: Examples
-..    :maxdepth: 1
-..    :hidden:
+.. toctree::
+   :caption: Examples
+   :maxdepth: 1
+   :hidden:
 
-..    BRCA_Train2
+   BRCA_Train2
 
