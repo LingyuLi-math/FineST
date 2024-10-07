@@ -23,7 +23,7 @@ scikit-learn>=0.23
 hilearn
 
 # dependencies
-torch==1.7.1
+# torch==1.7.1
 
 # Others
 threadpoolctl
