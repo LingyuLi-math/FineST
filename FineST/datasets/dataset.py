@@ -100,4 +100,4 @@ for name, var in copy(locals()).items():
 
 
 __all__ = [  # noqa: F822
-    "NPC", "BRCA_FineST_allspot", "BRCA_Original_whole", "BRCA_FineST_subspot", "CRC16um","CRC_Original", "CRC_FineST", "A3","A4","A6","A7","A8","A9"]
+    "NPC", "BRCA_FineST_allspot", "BRCA_Original_whole", "BRCA_FineST_subspot", "CRC16um", "CRC_Original", "CRC_FineST", "A3","A4","A6","A7","A8","A9"]
